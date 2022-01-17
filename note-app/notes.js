@@ -27,6 +27,45 @@ const addNote = function(title,body){
     }
 }
  
+const removeNote = function(title){
+    const notes = loadNotes()
+    const check = notes.filter(function(notes){
+        return notes.title !== title
+    })
+    if (notes.length > check.length){
+        console.log(chalk.green.inverse('Note removed'))
+        saveNotes(check)
+    }else{
+        console.log(chalk.red.inverse('Note not found'))
+    }
+}
+
+const listNote = () =>{
+    const notes = loadNotes()
+    
+    console.log(chalk.green.inverse('Your note'))
+
+    notes.forEach((note) =>{
+        console.log(note.title)
+    })
+}
+
+const readNote =(title) => {
+    const notes = loadNotes()
+    var k=0
+    notes.forEach((note) =>{
+        if (note.title === title){
+            console.log(note.body)
+            k = k + 1
+        }
+    })
+
+    if (k === 0 ){
+        console.log(chalk.red.inverse('Note not found'))
+    }
+
+} 
+
 
 const saveNotes = function(notes){
     const dataJson = JSON.stringify(notes)
@@ -43,21 +82,12 @@ const loadNotes = function(){
     }
 }
 
-const removeNote = function(title){
-    const notes = loadNotes()
-    const check = notes.filter(function(notes){
-        return notes.title !== title
-    })
-    if (notes.length > check.length){
-        console.log(chalk.green.inverse('Note removed'))
-        saveNotes(check)
-    }else{
-        console.log(chalk.red.inverse('Note not found'))
-    }
-}
+
 
 module.exports={
     getNotes: getNotes,
     addNote: addNote,
-    removeNote: removeNote
+    removeNote: removeNote,
+    listNote : listNote,
+    readNote : readNote,
 } 
